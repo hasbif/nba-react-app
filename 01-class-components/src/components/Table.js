@@ -29,6 +29,7 @@ export default function SimpleTable(props) {
                         <TableCell align="right">Last Name</TableCell>
                         <TableCell align="right">Position</TableCell>
                         <TableCell align="right">Team</TableCell>
+                        <TableCell align="right">Stats/Details</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -40,6 +41,7 @@ export default function SimpleTable(props) {
                             <TableCell align="right">{player.first_name}</TableCell>
                             <TableCell align="right">{player.position === "" ? 'N/A' : player.position}</TableCell>
                             <TableCell align="right">{player.team.abbreviation}</TableCell>
+                            <TableCell align="right"><button>Details {player.id}</button></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
