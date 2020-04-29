@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { setFavPlayers } from '../store/actions/favoriteActions'
 
 const useStyles = makeStyles({
     table: {
@@ -21,6 +23,22 @@ export default function SimpleTable(props) {
     const { data } = props
 
 
+    const { favPlayers } = useSelector(state => state.favoriteReducers)
+    const dispatch = useDispatch()
+    const addFavourite = (e) => {
+        let player = data.find(x => x.id == e.target.value)
+        let payload = [...favPlayers, player]
+        dispatch(setFavPlayers(payload))
+    }
+
+    const rmvFavourite = (e) => {
+        let index = favPlayers.indexOf(favPlayers.find(x => x.id == e.target.value));
+        let payload = [...favPlayers]
+        payload.splice(index, 1)
+        dispatch(setFavPlayers(payload))
+    }
+
+
     return (
         <TableContainer component={Paper} style={{ opacity: "0.9" }}>
             <Table className={classes.table} aria-label="simple table">
@@ -31,6 +49,7 @@ export default function SimpleTable(props) {
                         <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Position</TableCell>
                         <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Team</TableCell>
                         <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Info</TableCell>
+                        <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>MyPlayers</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -43,6 +62,11 @@ export default function SimpleTable(props) {
                             <TableCell align="center" style={{ fontSize: "20px" }}>{player.position === "" ? 'N/A' : player.position}</TableCell>
                             <TableCell align="center" style={{ fontSize: "20px" }}>{player.team.abbreviation}</TableCell>
                             <TableCell align="center" style={{ fontSize: "20px" }}><Link to={`/player/${player.id}`}><button>More</button></Link></TableCell>
+                            <TableCell align="center" style={{ fontSize: "20px" }}>
+                                {favPlayers.find(x => x.id == player.id) ?
+                                    <button onClick={rmvFavourite} value={player.id} style={{ backgroundColor: "Red", color: "White" }}>Remove</button>
+                                    : <button onClick={addFavourite} value={player.id} style={{ backgroundColor: "Blue", color: "White" }}>Add</button>}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
