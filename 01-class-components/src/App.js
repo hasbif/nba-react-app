@@ -1,38 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import logo from './logo.svg';
-// import './App.css';
-import Page from './components/Page'
+import Home from './pages/Home'
+import Details from './pages/Details'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
-// class App extends Component {
-//   render() {
-//     return <div>
-//       <Page />
-//     </div>
-//   }
-// }
+
+
 
 function App() {
   return (
-    <>
-      <Page />
-    </>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+    <Router>
+      {/* <nav >
+        <ul style={{
+          listStyle: "none",
+        }}>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/users">Users</Link>
+          </li>
+        </ul>
+      </nav> */}
+
+      <Switch>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/player/:id"><Details /></Route>
+      </Switch>
+    </Router>
   );
 }
 

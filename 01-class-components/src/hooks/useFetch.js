@@ -14,7 +14,7 @@ export default (url) => {
             }
         })
             .then(response => response.json())
-            .then(data => setData(data.data))
+            .then(data => setData(data))
             .catch(err => setErr(err))
             .finally(() => setLoading(false))
     }, [url])

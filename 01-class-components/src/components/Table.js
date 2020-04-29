@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     table: {
@@ -25,11 +26,11 @@ export default function SimpleTable(props) {
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>First Name</TableCell>
-                        <TableCell align="right">Last Name</TableCell>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell align="right">First Name</TableCell>
                         <TableCell align="right">Position</TableCell>
                         <TableCell align="right">Team</TableCell>
-                        <TableCell align="right">Stats/Details</TableCell>
+                        <TableCell align="right">Info</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -41,7 +42,7 @@ export default function SimpleTable(props) {
                             <TableCell align="right">{player.first_name}</TableCell>
                             <TableCell align="right">{player.position === "" ? 'N/A' : player.position}</TableCell>
                             <TableCell align="right">{player.team.abbreviation}</TableCell>
-                            <TableCell align="right"><button>Details {player.id}</button></TableCell>
+                            <TableCell align="right"><Link to={`/player/${player.id}`}><button>More</button></Link></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
