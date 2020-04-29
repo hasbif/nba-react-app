@@ -6,6 +6,7 @@ export default (url) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        setLoading(true)
         fetch(url, {
             "method": "GET",
             "headers": {

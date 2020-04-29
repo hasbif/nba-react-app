@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import SimpleTable from '../components/Table'
 import useFetch from '../hooks/useFetch'
-import spin from '../asset/Spin-1s-200px.svg'
+import spin from '../asset/Ripple-1s-304px.svg'
+import { Button, Navbar, Form, FormControl, Pagination } from 'react-bootstrap';
 
 
 function Page() {
@@ -10,9 +11,12 @@ function Page() {
     const [search, setSearch] = useState('')
     const [page, setPage] = useState(1)
 
-    if (loading) {
-        return <img src={spin} style={{ margin: "auto", alignSelf: "center" }} />
-    }
+    // if (loading) {
+    //     return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
+    //         <img src={spin} alt="loading" style={{ margin: "auto", alignSelf: "center" }} />
+
+    //     </div>
+    // }
     if (error) {
         return <p>{JSON.stringify(error)}</p>
     }
@@ -23,17 +27,30 @@ function Page() {
     }
 
     const handleInput = (e) => {
-        setSearch(e.target.value.trim().replace(/ /g, "%20"))
+        setSearch(e.target.value)
+        // e.target.value.trim().replace(/ /g, "%20")
     }
 
     const searchPlayer = (e) => {
         e.preventDefault()
         console.log(search, 'hihi')
-        setURL("https://free-nba.p.rapidapi.com/players?page=0&per_page=100&search=" + search)
+        let searchUrl = search.trim().replace(/ /g, "%20")
+        console.log(searchUrl)
+        setURL("https://free-nba.p.rapidapi.com/players?page=0&per_page=100&search=" + searchUrl)
     }
 
-    const changePage = (e) => {
-        let num = page + Number(e.target.value)
+
+    const nextPage = () => {
+        let num = page + 1
+        setPage(num)
+        console.log(page)
+        console.log(num)
+        console.log(url)
+        setURL(`https://free-nba.p.rapidapi.com/players?page=${num}&per_page=100`)
+    }
+
+    const backPage = () => {
+        let num = page - 1
         setPage(num)
         console.log(page)
         console.log(num)
@@ -43,21 +60,38 @@ function Page() {
 
 
     return <>
-        <h1 style={{ "textAlign": "center" }}>NBA Player Info</h1>
+        <Navbar className="bg-light justify-content-between" style={{ height: "5em" }}>
+            <Pagination style={{ margin: "auto 0px" }}>
+                <Pagination.Prev onClick={backPage} disabled={(page > 1) ? false : true} />
+                <Pagination.Item active>{page}</Pagination.Item>
+                <Pagination.Next onClick={nextPage} value="1" />
+            </Pagination>
+            <h1 style={{
+                position: "absolute",
+                left: "50%",
+                transform: "translateX(-50%)"
+            }}>NBA Player Info</h1>
+            <Form inline onSubmit={searchPlayer}>
+                <FormControl type="text" id="searchForm" placeholder="Search team..." onChange={handleInput} value={search} className=" mr-sm-2" />
+                <Button onClick={searchPlayer} className=" mr-sm-2">Search</Button>
+                <Button onClick={clearSearch} variant="danger">X</Button>
+            </Form>
+        </Navbar>
 
-        <form>
-            <input id="searchForm" placeholder="Search team..." onChange={handleInput} value={search} />
-            <button onClick={searchPlayer}>Search</button>
-        </form>
-        <button onClick={clearSearch}>Clear</button>
+        {loading ?
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
+                <img src={spin} alt="loading" />
+            </div> :
+            (playerList.meta.total_count ? <SimpleTable data={playerList.data}></SimpleTable> :
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw", backgroundColor: "rgb(255,255,255,0.7)" }}>
+                    <h2>Player Not Found</h2>
+                </div>)
+        }
 
-        {(page > 1) ? <button onClick={changePage} value="-1"> {'<'} </button> : <button> {'<'} </button>}
-        {page}
-        <button onClick={changePage} value="1">{'>'}</button>
 
 
 
-        <SimpleTable data={playerList.data}></SimpleTable>
+
     </>
 
 

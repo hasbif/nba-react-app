@@ -22,27 +22,27 @@ export default function SimpleTable(props) {
 
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ opacity: "0.9" }}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Last Name</TableCell>
-                        <TableCell align="right">First Name</TableCell>
-                        <TableCell align="right">Position</TableCell>
-                        <TableCell align="right">Team</TableCell>
-                        <TableCell align="right">Info</TableCell>
+                        <TableCell style={{ fontWeight: "bold", fontSize: "28px" }}>Last Name</TableCell>
+                        <TableCell style={{ fontWeight: "bold", fontSize: "28px" }}>First Name</TableCell>
+                        <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Position</TableCell>
+                        <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Team</TableCell>
+                        <TableCell align="center" style={{ fontWeight: "bold", fontSize: "28px" }}>Info</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data.map((player, idx) => (
                         <TableRow key={idx}>
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" style={{ fontSize: "20px" }}>
                                 {player.last_name}
                             </TableCell>
-                            <TableCell align="right">{player.first_name}</TableCell>
-                            <TableCell align="right">{player.position === "" ? 'N/A' : player.position}</TableCell>
-                            <TableCell align="right">{player.team.abbreviation}</TableCell>
-                            <TableCell align="right"><Link to={`/player/${player.id}`}><button>More</button></Link></TableCell>
+                            <TableCell style={{ fontSize: "20px" }}>{player.first_name}</TableCell>
+                            <TableCell align="center" style={{ fontSize: "20px" }}>{player.position === "" ? 'N/A' : player.position}</TableCell>
+                            <TableCell align="center" style={{ fontSize: "20px" }}>{player.team.abbreviation}</TableCell>
+                            <TableCell align="center" style={{ fontSize: "20px" }}><Link to={`/player/${player.id}`}><button>More</button></Link></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
