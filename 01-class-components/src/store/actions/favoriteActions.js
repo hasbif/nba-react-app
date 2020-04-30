@@ -6,3 +6,11 @@ export const setFavPlayers = (players) => {
         payload: players
     }
 }
+
+
+export const rmvFavPlayers = (players) => {
+    return {
+        type: "RMV_FAVPLAYERS",
+        payload: players
+    }
+}

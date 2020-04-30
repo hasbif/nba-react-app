@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SimpleTable from '../components/Table'
-import useFetch from '../hooks/useFetch'
+// import useFetch from '../hooks/useFetch'
 import spin from '../asset/Ripple-1s-304px.svg'
 import { Button, Navbar, Form, FormControl, Pagination } from 'react-bootstrap';
 import { Link } from "react-router-dom"
-
-
+import { useSelector, useDispatch } from "react-redux"
+import { getPlayers } from "../store/actions/playersActions"
 
 
 
@@ -13,11 +13,23 @@ import { Link } from "react-router-dom"
 
 function Page() {
     const [url, setURL] = useState("https://free-nba.p.rapidapi.com/players?page=1&per_page=100")
-    const [playerList, error, loading] = useFetch(url)
+    // const [playerList, error, loading] = useFetch(url)
     const [search, setSearch] = useState('')
     const [page, setPage] = useState(1)
+    const [loading, setLoading] = useState(true)
 
 
+
+    let { players } = useSelector(state => state.playersReducers)
+    let dispatch = useDispatch()
+
+    useEffect(() => {
+        setLoading(true)
+        dispatch(getPlayers(url))
+            .then(() => {
+                setLoading(false)
+            })
+    }, [dispatch, url])
 
 
 
@@ -52,10 +64,6 @@ function Page() {
     }
 
 
-    if (error) {
-        return <p>{JSON.stringify(error)}</p>
-    }
-
 
     return <>
         <Navbar className="bg-light justify-content-between" style={{ height: "5em" }}>
@@ -77,11 +85,12 @@ function Page() {
             </Form>
         </Navbar>
 
+
         {loading ?
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
                 <img src={spin} alt="loading" />
             </div> :
-            (playerList.meta.total_count ? <SimpleTable data={playerList.data}></SimpleTable> :
+            (players.meta.total_count ? <SimpleTable data={players.data}></SimpleTable> :
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "93vh", width: "100vw", backgroundColor: "rgb(255,255,255,0.7)" }}>
                     <h2>Player Not Found</h2>
                 </div>)

@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import { setFavPlayers } from '../store/actions/favoriteActions'
+import { setFavPlayers, rmvFavPlayers } from '../store/actions/favoriteActions'
 
 const useStyles = makeStyles({
     table: {
@@ -27,15 +27,15 @@ export default function SimpleTable(props) {
     const dispatch = useDispatch()
     const addFavourite = (e) => {
         let player = data.find(x => x.id == e.target.value)
-        let payload = [...favPlayers, player]
-        dispatch(setFavPlayers(payload))
+        // let payload = [...favPlayers, player]
+        dispatch(setFavPlayers(player))
     }
 
     const rmvFavourite = (e) => {
         let index = favPlayers.indexOf(favPlayers.find(x => x.id == e.target.value));
-        let payload = [...favPlayers]
-        payload.splice(index, 1)
-        dispatch(setFavPlayers(payload))
+        // let payload = [...favPlayers]
+        // payload.splice(index, 1)
+        dispatch(rmvFavPlayers(index))
     }
 
 
