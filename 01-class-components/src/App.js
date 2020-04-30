@@ -18,25 +18,10 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        {/* <nav >
-        <ul style={{
-          listStyle: "none",
-        }}>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-        </ul>
-      </nav> */}
 
         <Switch>
           <Route exact path="/"><Home /></Route>
-          <Route path="/player/:id"><Details /></Route>
+          <Route path="/player/:playerId"><Details /></Route>
           <Route path="/favourites"><MyPlayers /></Route>
         </Switch>
       </Router>

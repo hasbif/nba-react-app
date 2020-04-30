@@ -10,12 +10,12 @@ import { Card, Navbar, Button } from 'react-bootstrap';
 
 
 function Page() {
-    let { id } = useParams()
-    const [url, setURL] = useState(`https://free-nba.p.rapidapi.com/players/${id}`)
+    let { playerId } = useParams()
+    const [url, setURL] = useState(`https://free-nba.p.rapidapi.com/players/${playerId}`)
     const [player, error, loading] = useFetch(url)
 
 
-    console.log(id)
+    console.log(playerId)
 
     if (loading) {
         return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
