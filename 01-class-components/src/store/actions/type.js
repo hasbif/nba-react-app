@@ -1,0 +1,1 @@
+export const SET_FAVPLAYERS = "SET_FAVPLAYERS"
