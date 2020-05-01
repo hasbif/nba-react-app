@@ -17,12 +17,12 @@ function Page() {
     return <>
 
         <Navbar className="bg-light justify-content-between" style={{ height: "5em" }}>
-            <Link to={`/`}><Button>Back</Button></Link>
+            <Link to={`/`} data-testid="backHomefromMP"><Button>Back</Button></Link>
             <h1 style={{
                 position: "absolute",
                 left: "50%",
                 transform: "translateX(-50%)"
-            }}>My Players List</h1>
+            }} data-testid="myplayerTitle">My Players List</h1>
 
         </Navbar>
 
