@@ -44,9 +44,7 @@ function Page() {
 
     const searchPlayer = (e) => {
         e.preventDefault()
-        console.log(search, 'hihi')
         let searchUrl = search.trim().replace(/ /g, "%20")
-        console.log(searchUrl)
         setURL("https://free-nba.p.rapidapi.com/players?page=0&per_page=100&search=" + searchUrl)
     }
 
@@ -71,13 +69,14 @@ function Page() {
                 <Pagination.Prev onClick={backPage} disabled={(page > 1) ? false : true} />
                 <Pagination.Item active>{page}</Pagination.Item>
                 <Pagination.Next onClick={nextPage} value="1" />
-                <Link to={`/favourites`}><Button className=" ml-sm-2">MyPlayers</Button></Link>
+                <Link to={`/favourites`} data-testid="MPbutton"><Button className=" ml-sm-2">MyPlayers</Button></Link>
             </Pagination>
             <h1 style={{
                 position: "absolute",
                 left: "50%",
                 transform: "translateX(-50%)"
-            }}>NBA Player Info</h1>
+
+            }} data-testid="homepageTitle">NBA Player List</h1>
             <Form inline onSubmit={searchPlayer}>
                 <FormControl type="text" id="searchForm" placeholder="Search team..." onChange={handleInput} value={search} className=" mr-sm-2" />
                 <Button onClick={searchPlayer} className=" mr-sm-2">Search</Button>

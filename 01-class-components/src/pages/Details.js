@@ -37,7 +37,6 @@ function Page() {
 
     return <>
 
-
         <Navbar className="bg-light justify-content-between" style={{ height: "5em" }}>
             <Link to={`/`}><Button>Back</Button></Link>
             <h1 style={{
